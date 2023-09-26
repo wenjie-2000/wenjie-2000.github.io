@@ -1,11 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>wenjie&#39;s blog</title>
-        <link>http://wenjie-2000.github.io/</link>
-        <description>This is my cool site</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 26 Sep 2023 11:09:52 &#43;0800</lastBuildDate>
-            <atom:link href="http://wenjie-2000.github.io/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+        <title>NLP - Category - wenjie&#39;s blog</title>
+        <link>http://wenjie-2000.github.io/categories/nlp/</link>
+        <description>NLP - Category - wenjie&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 26 Sep 2023 11:09:52 &#43;0800</lastBuildDate><atom:link href="http://wenjie-2000.github.io/categories/nlp/" rel="self" type="application/rss+xml" /><item>
     <title>文本预处理</title>
     <link>http://wenjie-2000.github.io/posts/%E6%96%87%E6%9C%AC%E9%A2%84%E5%A4%84%E7%90%86/</link>
     <pubDate>Tue, 26 Sep 2023 11:09:52 &#43;0800</pubDate>
@@ -20,14 +18,6 @@
     <author>wenjie</author>
     <guid>http://wenjie-2000.github.io/posts/dnn/</guid>
     <description><![CDATA[1. 背景知识 深度学习 深度学习是机器学习的一个分支。许多传统机器学习算法学习能力有限，数据量的增加并不能持续增加学到的知识总量，而深度学习系统可]]></description>
-</item>
-<item>
-    <title>多线程</title>
-    <link>http://wenjie-2000.github.io/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
-    <pubDate>Mon, 25 Sep 2023 23:07:06 &#43;0800</pubDate>
-    <author>wenjie</author>
-    <guid>http://wenjie-2000.github.io/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</guid>
-    <description><![CDATA[创建 简单来说每个线程都和执行一个main函数是一样的（main就是一个线程，只不过这个线程中main是它的入口函数），也需要一个入口函数，并]]></description>
 </item>
 </channel>
 </rss>

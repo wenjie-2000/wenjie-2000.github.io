@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>DNN - wenjie&#39;s blog</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="DNN" />
+<meta property="og:description" content="1. 背景知识 深度学习 深度学习是机器学习的一个分支。许多传统机器学习算法学习能力有限，数据量的增加并不能持续增加学到的知识总量，而深度学习系统可" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wenjie-2000.github.io/posts/dnn/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-26T09:10:26+08:00" />
+<meta property="article:modified_time" content="2023-09-26T09:10:26+08:00" /><meta property="og:site_name" content="My cool site" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="DNN"/>
+<meta name="twitter:description" content="1. 背景知识 深度学习 深度学习是机器学习的一个分支。许多传统机器学习算法学习能力有限，数据量的增加并不能持续增加学到的知识总量，而深度学习系统可"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wenjie-2000.github.io/posts/dnn/" /><link rel="prev" href="http://wenjie-2000.github.io/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" /><link rel="next" href="http://wenjie-2000.github.io/posts/%E6%96%87%E6%9C%AC%E9%A2%84%E5%A4%84%E7%90%86/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "DNN",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wenjie-2000.github.io\/posts\/dnn\/"
+        },"genre": "posts","keywords": "NLP","wordcount":  5385 ,
+        "url": "http:\/\/wenjie-2000.github.io\/posts\/dnn\/","datePublished": "2023-09-26T09:10:26+08:00","dateModified": "2023-09-26T09:10:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "wenjie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="wenjie&#39;s blog">My cool site</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="wenjie&#39;s blog">My cool site</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">DNN</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>wenjie</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/nlp/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>NLP</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-26">2023-09-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5385 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-背景知识">1. 背景知识</a>
+      <ul>
+        <li><a href="#深度学习">深度学习</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-dnn">2. DNN</a>
+      <ul>
+        <li><a href="#21-从感知器到神经网络">2.1 从感知器到神经网络</a></li>
+        <li><a href="#22-dnn的基本结构">2.2 DNN的基本结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#cnn">CNN</a>
+      <ul>
+        <li><a href="#cm">CM</a></li>
+        <li><a href="#textcnn">TextCNN</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-背景知识">1. 背景知识</h2>
+<h3 id="深度学习">深度学习</h3>
+<p>深度学习是机器学习的一个分支。许多传统机器学习算法学习能力有限，数据量的增加并不能持续增加学到的知识总量，而深度学习系统可以通过访问更多数据来提升性能，即“更多经验”的机器代名词。机器通过深度学习获得足够经验后，即可用于特定的任务，如驾驶汽车、识别田地作物间的杂草、确诊疾病、检测机器故障等。
+深度结构有着强大的非线性拟合能力，可以任意精度逼近任何非线性连续函数，来进行高纬度数据处理，同时配合着强大的特征提取能力，可以通过自动学习出数据中的“合理规则”。同时缺点在于模型过于黑盒，隐藏了许多可解释性，并且计算量高，需要高性能硬件，寻找的一般是数据间的相关性，模型无法检测出数据对背后的因果逻辑，因此对新鲜数据的适应性差。</p>
+<h2 id="2-dnn">2. DNN</h2>
+<p>深度神经网络（Deep Neural Networks， 以下简称DNN）是深度学习的基础。需要理解DNN，必需要知道DNN背后的模型。</p>
+<h3 id="21-从感知器到神经网络">2.1 从感知器到神经网络</h3>
+<p>抽象模拟脑电波在脑神经间的传递过程，以获得机器学习中最简单的神经网络——感知器。感知器的模型是有若干输入和一个输出的模型，然后探究输出和输入之间学习到一个线性关系，y = Σwx + b。因为脑神经中有个机制是抑制和激活状态，在线性关系之后可以加入一个激活参数，决定感知器的激活状态，使输出在 -1～1之间。单个感知器只能处理二元分类问题，而神经网络会在感知器上进行拓展，以完成更加复杂的任务。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rher9pfi61.jpeg?imageView2/0/w/500/h/500#id=vX4E5&amp;originHeight=222&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rher9pfi61.jpeg?imageView2/0/w/500/h/500#id=vX4E5&amp;originHeight=222&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rher9pfi61.jpeg?imageView2/0/w/500/h/500#id=vX4E5&amp;originHeight=222&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rher9pfi61.jpeg?imageView2/0/w/500/h/500#id=vX4E5&amp;originHeight=222&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rher9pfi61.jpeg?imageView2/0/w/500/h/500#id=vX4E5&amp;originHeight=222&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rher9pfi61.jpeg?imageView2/0/w/500/h/500#id=vX4E5&amp;originHeight=222&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />如上图所示，x为输入，y为输出，w、b为线性参数，f为激活函数。</p>
+<p>神经网络在横向和纵向维度对感知器进行拓展，比如添加隐藏层以纵向拓展其深度，增加输出结果以横向拓展宽度，丰富激活函数的种类以加强其非线性变换能力，增强神经网络的表达能力。在下面的图中，每一个圆圈表示一个感知器，有输入有输出也有激活函数，颜色深浅表示激活程度。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rherhfonww.png?imageView2/0/w/500/h/500#id=dxr0R&amp;originHeight=252&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rherhfonww.png?imageView2/0/w/500/h/500#id=dxr0R&amp;originHeight=252&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rherhfonww.png?imageView2/0/w/500/h/500#id=dxr0R&amp;originHeight=252&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rherhfonww.png?imageView2/0/w/500/h/500#id=dxr0R&amp;originHeight=252&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rherhfonww.png?imageView2/0/w/500/h/500#id=dxr0R&amp;originHeight=252&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rherhfonww.png?imageView2/0/w/500/h/500#id=dxr0R&amp;originHeight=252&amp;originWidth=500&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
+<h3 id="22-dnn的基本结构">2.2 DNN的基本结构</h3>
+<p>神经网络层可以分为三类，输入层，隐藏层和输出层，如上图示例。一般来说第一层是输入层，最后一层是输出层，而中间的层数都是隐藏层（注意输入层是没有w参数的）。</p>
+<h4 id="221-前向传播算法">2.2.1 前向传播算法</h4>
+<p>假设选择的激活函数是Sigmoid函数，隐藏层和输出层的输出值为a  ，则对于下图的三层DNN，利用和感知机一样的思路，我们可以利用上一层的输出计算下一层的输出，也就是所谓的DNN前向传播算法。使用代数法一个个的表示输出比较复杂，而如果使用矩阵法则比较的简洁。比如输入层有m个输入，后面接着的隐藏层有n个输出，使用一个w的矩阵[m×n]，即可把m个输入转化为n个输出。然后利用若干个权重系数矩阵W，偏倚向量b来和输入值向量x进行一系列线性运算和激活运算，从输入层开始，一层层的向后计算，一直到运算到输出层，得到输出结果为值。</p>
+<h5 id="激活函数">激活函数</h5>
+<p>激活函数是非线性函数，通过加入激活函数，使得感知器可以处理一些最基本的异或问题，甚至是更复杂的非线性问题。
+<strong>常见的激活函数</strong>
+sigmoid函数：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rheszdly6m.jpeg?imageView2/0/w/640/h/640#id=Qu5t9&amp;originHeight=215&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rheszdly6m.jpeg?imageView2/0/w/640/h/640#id=Qu5t9&amp;originHeight=215&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rheszdly6m.jpeg?imageView2/0/w/640/h/640#id=Qu5t9&amp;originHeight=215&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rheszdly6m.jpeg?imageView2/0/w/640/h/640#id=Qu5t9&amp;originHeight=215&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rheszdly6m.jpeg?imageView2/0/w/640/h/640#id=Qu5t9&amp;originHeight=215&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rheszdly6m.jpeg?imageView2/0/w/640/h/640#id=Qu5t9&amp;originHeight=215&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+其缺点如下：</p>
+<ol>
+<li>当输入很大或很小，饱和的神经元会带来梯度消失（Gradient Vanishing)；</li>
+<li>函数的输出不是以0为对称的（zero-centered）；</li>
+<li>使用指数函数，计算代价有点高。</li>
+</ol>
+<p>tanh函数
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhet1d2uy5.jpeg?imageView2/0/w/640/h/640#id=V6mWN&amp;originHeight=276&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhet1d2uy5.jpeg?imageView2/0/w/640/h/640#id=V6mWN&amp;originHeight=276&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhet1d2uy5.jpeg?imageView2/0/w/640/h/640#id=V6mWN&amp;originHeight=276&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhet1d2uy5.jpeg?imageView2/0/w/640/h/640#id=V6mWN&amp;originHeight=276&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhet1d2uy5.jpeg?imageView2/0/w/640/h/640#id=V6mWN&amp;originHeight=276&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhet1d2uy5.jpeg?imageView2/0/w/640/h/640#id=V6mWN&amp;originHeight=276&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+与sigmoid函数相比，其解决了zero-centered的问题。但是，梯度消失与指数函数计算代价高的问题，仍然存在。</p>
+<p>relu函数
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhet4cogwv.png?imageView2/0/w/640/h/640#id=PL1jf&amp;originHeight=286&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhet4cogwv.png?imageView2/0/w/640/h/640#id=PL1jf&amp;originHeight=286&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhet4cogwv.png?imageView2/0/w/640/h/640#id=PL1jf&amp;originHeight=286&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhet4cogwv.png?imageView2/0/w/640/h/640#id=PL1jf&amp;originHeight=286&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhet4cogwv.png?imageView2/0/w/640/h/640#id=PL1jf&amp;originHeight=286&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhet4cogwv.png?imageView2/0/w/640/h/640#id=PL1jf&amp;originHeight=286&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+优点：</p>
+<ol>
+<li>在输入空间的一半都不存在饱和问题；</li>
+<li>收敛速度快；
+缺点：</li>
+<li>输出不是以0为中心；</li>
+<li>Dead Relu Problem，指的是某些神经元可能永远不会被激活，导致相应的参数永远不会被更新（参数初始化问题或者参数更新太大）；</li>
+<li>在输入空间的另一半会存在梯度消失的问题。</li>
+</ol>
+<h4 id="222-反向传播算法">2.2.2 反向传播算法</h4>
+<p>如果我们采用DNN的模型，即输入层m个神经元，输出层有n个神经元。再加上一些含有若干神经元的隐藏层。此时需要找到合适的所有隐藏层和输出层对应的线性系数矩阵W，偏倚向量b，让所有的训练样本输入计算出的输出尽可能的等于或很接近样本输出。怎么找到合适的参数呢？</p>
+<p>可以用一个合适的损失函数来度量训练样本的输出损失，接着对这个损失函数进行优化求最小化的极值，对应的一系列线性系数矩阵W，偏倚向量b即为我们的最终结果。在DNN中，损失函数优化极值求解的过程最常见的一般是通过梯度下降法来一步步迭代完成的。</p>
+<h5 id="损失函数">损失函数</h5>
+<p>损失函数用来评价模型的预测值和真实值的残差，损失函数越好，通常模型的性能越好。不同的模型用的损失函数一般也不一样。这里将常用的损失函数分为了两大类：回归和分类问题。然后又分别对这两类进行了细分和讲解，其中回归中包含了一种不太常见的损失函数：平均偏差误差，可以用来确定模型中存在正偏差还是负偏差。</p>
+<p>回归问题处理的则是连续值的预测问题，例如给定房屋面积、房间数量以及房间大小，预测房屋价格。在分类任务中，我们要从类别值有限的数据集中预测输出，比如给定一个手写数字图像的大数据集，将其分为 0～9 中的一个。</p>
+<p>在本次训练营中，我们关注的是文本分类问题，分类问题常用的损失函数是交叉熵(cross-entropy)。
+在二分类场景下，模型最后需要预测的结果只有两种情况，对于每个类别我们的预测得到的概率为p和1-p，此时表达式为（log 的底数是 e）：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhf4uxt13g.png?imageView2/0/w/640/h/640#id=sWu2g&amp;originHeight=95&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhf4uxt13g.png?imageView2/0/w/640/h/640#id=sWu2g&amp;originHeight=95&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhf4uxt13g.png?imageView2/0/w/640/h/640#id=sWu2g&amp;originHeight=95&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhf4uxt13g.png?imageView2/0/w/640/h/640#id=sWu2g&amp;originHeight=95&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhf4uxt13g.png?imageView2/0/w/640/h/640#id=sWu2g&amp;originHeight=95&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhf4uxt13g.png?imageView2/0/w/640/h/640#id=sWu2g&amp;originHeight=95&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+其中：
+yi 表示样本 i 的label，正类为 1 ，负类为 0
+pi 表示样本 i 预测为正类的概率</p>
+<p>多分类的情况实际上就是对二分类的扩展：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhf5fu3keb.png?imageView2/0/w/450/h/450#id=qh9CO&amp;originHeight=93&amp;originWidth=450&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhf5fu3keb.png?imageView2/0/w/450/h/450#id=qh9CO&amp;originHeight=93&amp;originWidth=450&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhf5fu3keb.png?imageView2/0/w/450/h/450#id=qh9CO&amp;originHeight=93&amp;originWidth=450&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhf5fu3keb.png?imageView2/0/w/450/h/450#id=qh9CO&amp;originHeight=93&amp;originWidth=450&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhf5fu3keb.png?imageView2/0/w/450/h/450#id=qh9CO&amp;originHeight=93&amp;originWidth=450&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhf5fu3keb.png?imageView2/0/w/450/h/450#id=qh9CO&amp;originHeight=93&amp;originWidth=450&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+M类别的数量
+yic 符号函数（ 0 或 1 ），如果样本 i 的真实类别等于 c 取 1 ，否则取 0
+pic 观测样本 i 属于类别 c 的预测概率</p>
+<p>🌰例子：我们希望根据文本的特征，来预测情感的类别，有三种可预测类别：高兴、悲伤、愤怒。假设我们当前有一个模型，是通过softmax的方式得到对于每个预测结果的概率：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/riws1hfi84.png#id=xynGy&amp;originHeight=474&amp;originWidth=662&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/riws1hfi84.png#id=xynGy&amp;originHeight=474&amp;originWidth=662&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/riws1hfi84.png#id=xynGy&amp;originHeight=474&amp;originWidth=662&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/riws1hfi84.png#id=xynGy&amp;originHeight=474&amp;originWidth=662&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/riws1hfi84.png#id=xynGy&amp;originHeight=474&amp;originWidth=662&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/riws1hfi84.png#id=xynGy&amp;originHeight=474&amp;originWidth=662&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
+<p>通过刚刚的多分类计算公式得到loss值：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhf6hgos73.png?imageView2/0/w/640/h/640#id=J0RwB&amp;originHeight=223&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhf6hgos73.png?imageView2/0/w/640/h/640#id=J0RwB&amp;originHeight=223&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhf6hgos73.png?imageView2/0/w/640/h/640#id=J0RwB&amp;originHeight=223&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhf6hgos73.png?imageView2/0/w/640/h/640#id=J0RwB&amp;originHeight=223&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhf6hgos73.png?imageView2/0/w/640/h/640#id=J0RwB&amp;originHeight=223&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhf6hgos73.png?imageView2/0/w/640/h/640#id=J0RwB&amp;originHeight=223&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
+<h5 id="梯度下降">梯度下降</h5>
+<p>在机器学习算法中，在最小化损失函数时，可以通过梯度下降法来一步步的迭代求解，得到最小化的损失函数，和模型参数值。
+梯度下降法的思路很简单，想象在山顶放了一个球，一松手它就会顺着山坡最陡峭的地方滚落到谷底：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhf7c8rejf.png?imageView2/0/w/640/h/640#id=F2tyf&amp;originHeight=317&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhf7c8rejf.png?imageView2/0/w/640/h/640#id=F2tyf&amp;originHeight=317&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhf7c8rejf.png?imageView2/0/w/640/h/640#id=F2tyf&amp;originHeight=317&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhf7c8rejf.png?imageView2/0/w/640/h/640#id=F2tyf&amp;originHeight=317&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhf7c8rejf.png?imageView2/0/w/640/h/640#id=F2tyf&amp;originHeight=317&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhf7c8rejf.png?imageView2/0/w/640/h/640#id=F2tyf&amp;originHeight=317&amp;originWidth=640&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
+<p>从上面的解释可以看出，梯度下降不一定能够找到全局的最优解，有可能是一个局部最优解。当然，如果损失函数是凸函数，梯度下降法得到的解就一定是全局最优解。</p>
+<p>而用数学公式来解释，首先要了解步长和导数对梯度下降的作用。拿一个凸函数f(x) = xˆ2举例，在这里斜率就是对损失函数的 x0 求的导数，具体的x0 的纵坐标是目前模型的loss值，步长是横坐标变化量。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhf7pulmin.jpeg?imageView2/0/w/640/h/640#id=A25sS&amp;originHeight=332&amp;originWidth=480&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhf7pulmin.jpeg?imageView2/0/w/640/h/640#id=A25sS&amp;originHeight=332&amp;originWidth=480&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhf7pulmin.jpeg?imageView2/0/w/640/h/640#id=A25sS&amp;originHeight=332&amp;originWidth=480&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhf7pulmin.jpeg?imageView2/0/w/640/h/640#id=A25sS&amp;originHeight=332&amp;originWidth=480&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhf7pulmin.jpeg?imageView2/0/w/640/h/640#id=A25sS&amp;originHeight=332&amp;originWidth=480&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhf7pulmin.jpeg?imageView2/0/w/640/h/640#id=A25sS&amp;originHeight=332&amp;originWidth=480&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
+<p>在凸函数上，随着一步步的迭代，斜率不断减小并趋近于0，因此被称为梯度下降法，并且当斜率趋近为0是，得到的loss值也是最小值。</p>
+<h5 id="优化器">优化器</h5>
+<p>优化器就是在深度学习反向传播过程中，指引损失函数（目标函数）的各个参数往正确的方向更新合适的大小，使得更新后的各个参数让损失函数（目标函数）值不断逼近全局最小。
+常见的优化器有随机梯度下降法（Stochastic Gradient Descent，SGD）、Adam（自适应学习率算法）等。</p>
+<p>随机梯度下降算法每次从训练集中随机选择一个样本来进行学习</p>
+<h2 id="cnn">CNN</h2>
+<p>卷积神经网络（Convolutional Neural Networks, CNN）是一类包含卷积计算且具有深度结构的前馈神经网络（Feedforward Neural Networks），是深度学习的代表算法之一。CNN有很强的表征学习能力，去学习结构化特征，一般应用于图像处理。想要了解卷积神经在计算机视觉中的应用请点击<a href="https://cs231n.github.io/convolutional-networks/" target="_blank" rel="noopener noreffer">CNN教程</a>
+进行进一步了解。</p>
+<p>CNN和DNN的差别在于CNN的隐藏层还包括了卷积层和池化层，以及输出层改成了全连接FC层，在卷积层中使用局部感受野和权值共享的技术，这些技术都可以帮助降低模型复杂度，减少参数数量。</p>
+<h3 id="cm">CM</h3>
+<h4 id="卷积层">卷积层</h4>
+<p>卷积层对输入图像进行转换，以从中提取特征。 在这种转换中，图像与卷积核（或过滤器）卷积。</p>
+<p><strong>卷积计算</strong>
+卷积核是一个小的矩阵，其高度和宽度小于要卷积的图像。 它也被称为卷积矩阵或卷积掩码。 该核在图像输入的高度和宽度上滑动，并且卷积核的点积和图像在每个空间位置处进行计算。 卷积核滑动的长度称为步幅长度。 在下面的图像中，输入图像的大小为5X5，卷积核的大小为3X3，步幅为1。输出图像也称为卷积特征。在下图中绿色部分为图像，黄色部分为卷积核，粉色部分为卷积特征。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhfamyw36d.gif?imageView2/0/w/640/h/640#id=DPOLs&amp;originHeight=384&amp;originWidth=526&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhfamyw36d.gif?imageView2/0/w/640/h/640#id=DPOLs&amp;originHeight=384&amp;originWidth=526&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhfamyw36d.gif?imageView2/0/w/640/h/640#id=DPOLs&amp;originHeight=384&amp;originWidth=526&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhfamyw36d.gif?imageView2/0/w/640/h/640#id=DPOLs&amp;originHeight=384&amp;originWidth=526&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhfamyw36d.gif?imageView2/0/w/640/h/640#id=DPOLs&amp;originHeight=384&amp;originWidth=526&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhfamyw36d.gif?imageView2/0/w/640/h/640#id=DPOLs&amp;originHeight=384&amp;originWidth=526&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+当我们想使用卷积从一个图像中提取多个特征时，我们可以使用多个卷积核而不是仅使用一个。 在这种情况下，所有卷积核的大小必须相同。 输入图像和输出图像的卷积特征一个接一个地堆叠在一起以创建输出，因此通道数等于使用的滤镜数。在下图中，通道数为3个。</p>
+<p>激活层是卷积层的最后一个组成部分，可增加输出中的非线性。 通常，在卷积层中将ReLu函数或Tanh函数用作激活函数（在本次训练营，建议使用Tanh函数，因为Tanh函数在文本和音频处理有比较好的效果。）。 这是一个简单卷积层的图像，其中将6X6X3输入图像与大小为4X4X3的两个卷积核卷积以得到大小为3X3X2的卷积特征，对其应用激活函数以获取输出，这也称为特征地图。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhfb1e2grc.png?imageView2/0/w/960/h/960#id=JWzxr&amp;originHeight=333&amp;originWidth=960&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhfb1e2grc.png?imageView2/0/w/960/h/960#id=JWzxr&amp;originHeight=333&amp;originWidth=960&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhfb1e2grc.png?imageView2/0/w/960/h/960#id=JWzxr&amp;originHeight=333&amp;originWidth=960&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhfb1e2grc.png?imageView2/0/w/960/h/960#id=JWzxr&amp;originHeight=333&amp;originWidth=960&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhfb1e2grc.png?imageView2/0/w/960/h/960#id=JWzxr&amp;originHeight=333&amp;originWidth=960&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhfb1e2grc.png?imageView2/0/w/960/h/960#id=JWzxr&amp;originHeight=333&amp;originWidth=960&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
+<p><strong>专有名词解释</strong>
+针对CNN有一些专有名词，比如通道，卷积核大小，步长，填充和输入输出通道数进行解释。</p>
+<p>通道，对于图像数据来说，一张彩色图片有R,G,B红绿蓝三通道，那么这里就可以说输入图像的通道数为3，假设这张图片为黑白照片，则通道数为2。</p>
+<p>卷积核大小，在网络中代表感受野的大小，二维卷积核最常见的就是 3X3 的卷积核，也可以根据网络设计5X5或者7X7，甚至1X1等不同size的卷积核，来提取不同尺度的特征。在卷积神经网络中，一般情况下，卷积核越大，感受野（receptive field）越大，看到的图片信息越多，所获得的全局特征越好。虽说如此，但是大的卷积核会导致计算量的暴增，不利于模型深度的增加，计算性能也会降低。如上图中卷积核的size为3X3.</p>
+<p>步长，即为卷积核每次计算时移动的距离。步长小，提取的特征更全面，不会遗漏太多信息，但计算量大，容易产生过拟合问题；步长大，计算量下降，但可能错失一些有用特征。</p>
+<p>填充，卷积核与图像尺寸不匹配，往往填充图像缺失区域，如果原始图片尺寸为5X5，卷积核的大小为3X3，如果不进行填充，步长为1的话，当卷积核沿着图片滑动后只能滑动出一个3X3的图片出来，这就造成了卷积后的图片和卷积前的图片尺寸不一致，这显然不是我们想要的结果，所以为了避免这种情况，需要先对原始图片做边界填充处理。</p>
+<p>输入和输出通道数（Input &amp; Output Channels）：卷积核的输入通道数（in depth）由输入矩阵的通道数所决定；输出矩阵的通道数（out depth）由卷积核的输出通道数所决定。每一层卷积有多少channel数，以及一共有多少层卷积，这些暂时没有理论支撑，一般都是靠感觉去设置几组候选值，然后通过实验挑选出其中的最佳值。这也是现在深度卷积神经网络虽然效果拔群，但是一直为人诟病的原因之一。</p>
+<h4 id="池化层">池化层</h4>
+<p>池化层也称为下采样，主要用于特征降维，压缩数据和参数数量，减小过拟合，提升模型容错率。 在卷积神经网络中，通常在卷积层，激活层之后是池化层。 通常添加池层以加快计算速度，并使某些检测到的功能更健壮。
+池操作也使用卷积核和跨步。 在下面的示例图像中，使用2X2过滤器合并大小为4，跨度为2的4X4输入图像。
+有不同类型的池。 最大池和平均池是卷积神经网络中最常用的池方法。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhfb3m7ngn.png?imageView2/0/w/960/h/960#id=CZiSG&amp;originHeight=215&amp;originWidth=725&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhfb3m7ngn.png?imageView2/0/w/960/h/960#id=CZiSG&amp;originHeight=215&amp;originWidth=725&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhfb3m7ngn.png?imageView2/0/w/960/h/960#id=CZiSG&amp;originHeight=215&amp;originWidth=725&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhfb3m7ngn.png?imageView2/0/w/960/h/960#id=CZiSG&amp;originHeight=215&amp;originWidth=725&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhfb3m7ngn.png?imageView2/0/w/960/h/960#id=CZiSG&amp;originHeight=215&amp;originWidth=725&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhfb3m7ngn.png?imageView2/0/w/960/h/960#id=CZiSG&amp;originHeight=215&amp;originWidth=725&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+最大池化：在最大池化中，从要素图的每个面片中选择最大值以创建缩小图，最大池化效果更好一点。
+平均池化：在平均池化中，从要素图的每个面片中选择平均值以创建缩小图。</p>
+<h4 id="全连接层输出层">全连接层（输出层）</h4>
+<p>完全连接的层位于卷积神经网络的末端。 由较早层产生的特征图将展平为矢量。 然后，此向量被馈送到完全连接的层，以便它捕获高级要素之间的复杂关系。 该层的外面是一维特征向量，经由softmax函数得到最终的输出，整个模型训练完毕。   全连接层即为下图：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.nlark.com/yuque/0/2023/png/32597202/1693041875226-ed1ee02c-37cd-4669-8e4d-a1ff7c608f91.png#averageHue=%23e9e9e9&amp;clientId=ub8d85e0c-e4a5-4&amp;from=paste&amp;height=236&amp;id=u0f737b87&amp;originHeight=354&amp;originWidth=687&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=95671&amp;status=done&amp;style=none&amp;taskId=u4e0f3f32-59de-438a-8e20-ff17e9657b6&amp;title=&amp;width=458"
+        data-srcset="https://cdn.nlark.com/yuque/0/2023/png/32597202/1693041875226-ed1ee02c-37cd-4669-8e4d-a1ff7c608f91.png#averageHue=%23e9e9e9&amp;clientId=ub8d85e0c-e4a5-4&amp;from=paste&amp;height=236&amp;id=u0f737b87&amp;originHeight=354&amp;originWidth=687&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=95671&amp;status=done&amp;style=none&amp;taskId=u4e0f3f32-59de-438a-8e20-ff17e9657b6&amp;title=&amp;width=458, https://cdn.nlark.com/yuque/0/2023/png/32597202/1693041875226-ed1ee02c-37cd-4669-8e4d-a1ff7c608f91.png#averageHue=%23e9e9e9&amp;clientId=ub8d85e0c-e4a5-4&amp;from=paste&amp;height=236&amp;id=u0f737b87&amp;originHeight=354&amp;originWidth=687&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=95671&amp;status=done&amp;style=none&amp;taskId=u4e0f3f32-59de-438a-8e20-ff17e9657b6&amp;title=&amp;width=458 1.5x, https://cdn.nlark.com/yuque/0/2023/png/32597202/1693041875226-ed1ee02c-37cd-4669-8e4d-a1ff7c608f91.png#averageHue=%23e9e9e9&amp;clientId=ub8d85e0c-e4a5-4&amp;from=paste&amp;height=236&amp;id=u0f737b87&amp;originHeight=354&amp;originWidth=687&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=95671&amp;status=done&amp;style=none&amp;taskId=u4e0f3f32-59de-438a-8e20-ff17e9657b6&amp;title=&amp;width=458 2x"
+        data-sizes="auto"
+        alt="https://cdn.nlark.com/yuque/0/2023/png/32597202/1693041875226-ed1ee02c-37cd-4669-8e4d-a1ff7c608f91.png#averageHue=%23e9e9e9&amp;clientId=ub8d85e0c-e4a5-4&amp;from=paste&amp;height=236&amp;id=u0f737b87&amp;originHeight=354&amp;originWidth=687&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=95671&amp;status=done&amp;style=none&amp;taskId=u4e0f3f32-59de-438a-8e20-ff17e9657b6&amp;title=&amp;width=458"
+        title="image.png" /></p>
+<h3 id="textcnn">TextCNN</h3>
+<p>Yoon Kim在论文(2014 EMNLP) Convolutional Neural Networks for Sentence Classification提出TextCNN。将卷积神经网络CNN应用到文本分类任务，利用多个不同size的kernel来提取句子中的关键信息（类似于多窗口大小的n-gram），从而能够更好地捕捉局部相关性。</p>
+<p>在下图的输入层“I like this movie very much ! ”的feature map长是7个单词（包括符号），宽是embedding的维度d=5，如果有两张feature map，可以理解为有两句话，也就是batch_size = 2。</p>
+<p>然后通过长宽不等的卷积核，宽分别为[2, 3, 4]的卷积核映射不同size的卷积特征（见下图第二列），通过激活（第二列到第三列），池化（第三列到第四列）和全连接操作，最后进行分类预测。</p>
+<p>由于每个单词的embedding dim(词向量长度)是固定的，每个卷积核的宽度也必须和单词的embedding dim 保持一致，只能改变卷积核的高度，卷积核的通道可以理解为用不同的词向量表示。</p>
+<p>输入句子的长度不一样，但是卷积核的个数一样，由于每个卷积核抽取单词的个数不一样，卷积核高度低的形成的feature maps 长度就长，卷积核高度高的形成的feature maps长度就短。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.kesci.com/upload/image/rhgw3up45u.png?imageView2/0/w/960/h/960#id=LMkMy&amp;originHeight=636&amp;originWidth=649&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        data-srcset="https://cdn.kesci.com/upload/image/rhgw3up45u.png?imageView2/0/w/960/h/960#id=LMkMy&amp;originHeight=636&amp;originWidth=649&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=, https://cdn.kesci.com/upload/image/rhgw3up45u.png?imageView2/0/w/960/h/960#id=LMkMy&amp;originHeight=636&amp;originWidth=649&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 1.5x, https://cdn.kesci.com/upload/image/rhgw3up45u.png?imageView2/0/w/960/h/960#id=LMkMy&amp;originHeight=636&amp;originWidth=649&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title= 2x"
+        data-sizes="auto"
+        alt="https://cdn.kesci.com/upload/image/rhgw3up45u.png?imageView2/0/w/960/h/960#id=LMkMy&amp;originHeight=636&amp;originWidth=649&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
+        title="https://cdn.kesci.com/upload/image/rhgw3up45u.png?imageView2/0/w/960/h/960#id=LMkMy&amp;originHeight=636&amp;originWidth=649&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" />
+<strong>代码实现</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#TextCNN的样例代码 将上图模型用pytorch表示出来</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">textCNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">Vocab</span><span class="p">,</span> <span class="n">class_num</span><span class="p">,</span><span class="n">kernel_sizes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">textCNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">Dim</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1">#每个词向量长度</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Cla</span> <span class="o">=</span> <span class="n">class_num</span> <span class="c1">#类别数</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Ci</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#输入的channel数</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Ks</span> <span class="o">=</span> <span class="n">kernel_sizes</span> <span class="c1"># 卷积核list，形如[2,3,4]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">embed</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">Vocab</span><span class="p">,</span><span class="n">Dim</span><span class="p">)</span> <span class="c1"># 词向量，这里直接随机</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">convs</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">Ci</span><span class="p">,</span><span class="mi">100</span><span class="p">,(</span><span class="n">K</span><span class="p">,</span><span class="n">Dim</span><span class="p">))</span> <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="n">Ks</span><span class="p">])</span> <span class="c1"># 卷积层</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Ks</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="n">Cla</span><span class="p">)</span> <span class="c1">#全连接层</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#(N,W,D)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#(N,Ci,W,D)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">conv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">convs</span><span class="p">]</span> <span class="c1"># len(Ks)*(N,Knum,W)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="o">.</span><span class="n">max_pool1d</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">line</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>  <span class="c1"># len(Ks)*(N,Knum)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#(N,Knum*len(Ks))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">logit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">logit</span>
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-09-26</span>
+            </div><div class="post-info-license">
+                <span><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://wenjie-2000.github.io/posts/dnn/" data-title="DNN" data-hashtags="NLP"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://wenjie-2000.github.io/posts/dnn/" data-hashtag="NLP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://wenjie-2000.github.io/posts/dnn/" data-title="DNN"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://wenjie-2000.github.io/posts/dnn/" data-title="DNN"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@6.20.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://wenjie-2000.github.io/posts/dnn/" data-title="DNN"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/nlp/">NLP</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="prev" rel="prev" title="多线程"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>多线程</a>
+            <a href="/posts/%E6%96%87%E6%9C%AC%E9%A2%84%E5%A4%84%E7%90%86/" class="next" rel="next" title="文本预处理">文本预处理<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">wenjie</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.1/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
