@@ -25,7 +25,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wenjie-2000.github.io\/posts\/%E6%96%87%E6%9C%AC%E9%A2%84%E5%A4%84%E7%90%86\/"
-        },"genre": "posts","keywords": "NLP","wordcount":  3489 ,
+        },"genre": "posts","keywords": "NLP","wordcount":  3492 ,
         "url": "http:\/\/wenjie-2000.github.io\/posts\/%E6%96%87%E6%9C%AC%E9%A2%84%E5%A4%84%E7%90%86\/","datePublished": "2023-09-26T11:09:52+08:00","dateModified": "2023-09-26T11:09:52+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -83,7 +83,7 @@
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">文本预处理</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>wenjie</a>
 </span>&nbsp;<span class="post-category">included in <a href="/categories/nlp/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>NLP</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-26">2023-09-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3489 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-26">2023-09-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3492 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -117,33 +117,32 @@
 <li>中文分词需要考虑粒度问题，粒度越大，表达的意思就越准确，但是也会导致召回比较少。所以中文需要不同的场景和要求选择不同的粒度。</li>
 </ol>
 <h3 id="分词的方法">分词的方法</h3>
-<ol>
-<li><strong>基于词典匹配的分词方式</strong>
-优点：速度快、成本低
-缺点：适应性不强，不同领域效果差异大
-基本思想是基于词典匹配，将待分词的中文文本根据一定规则切分和调整，然后跟词典中的词语进行匹配，匹配成功则按照词典的词分词，匹配失败通过调整或者重新选择，如此反复循环即可。代表方法有基于正向最大匹配和基于逆向最大匹配及双向匹配法。</li>
-<li><strong>基于统计的分词方法</strong>
-优点：适应性较强
-缺点：成本较高，速度较慢
-这类目前常用的是算法是HMM、CRF、SVM、深度学习等算法，比如stanford、Hanlp分词工具是基于CRF算法。以CRF为例，基本思路是对汉字进行标注训练，不仅考虑了词语出现的频率，还考虑上下文，具备较好的学习能力，因此其对歧义词和未登录词的识别都具有良好的效果。</li>
-<li><strong>基于深度学习</strong>
-优点：准确率高、适应性强
-缺点：成本高，速度慢
-例如有人员尝试使用双向LSTM+CRF实现分词器，其本质上是序列标注，所以有通用性，命名实体识别等都可以使用该模型，据报道其分词器字符准确率可高达97.5%。</li>
-</ol>
+<p><strong>基于词典匹配的分词方式</strong></p>
+<p>优点：速度快、成本低</p>
+<p>缺点：适应性不强，不同领域效果差异大</p>
+<p>基本思想是基于词典匹配，将待分词的中文文本根据一定规则切分和调整，然后跟词典中的词语进行匹配，匹配成功则按照词典的词分词，匹配失败通过调整或者重新选择，如此反复循环即可。代表方法有基于正向最大匹配和基于逆向最大匹配及双向匹配法。</p>
+<p><strong>基于统计的分词方法</strong></p>
+<p>优点：适应性较强</p>
+<p>缺点：成本较高，速度较慢</p>
+<p>这类目前常用的是算法是HMM、CRF、SVM、深度学习等算法，比如stanford、Hanlp分词工具是基于CRF算法。以CRF为例，基本思路是对汉字进行标注训练，不仅考虑了词语出现的频率，还考虑上下文，具备较好的学习能力，因此其对歧义词和未登录词的识别都具有良好的效果。</p>
+<p><strong>基于深度学习</strong></p>
+<p>优点：准确率高、适应性强</p>
+<p>缺点：成本高，速度慢</p>
+<p>例如有人员尝试使用双向LSTM+CRF实现分词器，其本质上是序列标注，所以有通用性，命名实体识别等都可以使用该模型，据报道其分词器字符准确率可高达97.5%。</p>
 <h4 id="分词工具">分词工具</h4>
-<p><strong>中文分词工具</strong>    下面排名根据 GitHub 上的 star 数排名：
-Hanlp
-Stanford 分词
-ansj 分词器
-哈工大 LTP
+<p><strong>中文分词工具</strong></p>
+<p>下面排名根据 GitHub 上的 star 数排名：</p>
+<p>Hanlp
+Stanford
+ansj分词器
+哈工大LTP
 KCWS分词器
 jieba
 IK
 清华大学THULAC
-ICTCLAS
-<strong>英文分词工具</strong>
-Keras
+ICTCLAS</p>
+<p><strong>英文分词工具</strong></p>
+<p>Keras
 Spacy
 Gensim
 NLTK</p>
@@ -183,13 +182,13 @@ NLTK</p>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>               <span class="c1">#英文句子分词</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">pos_tag</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">content</span><span class="p">)))</span> <span class="c1">#对分完词的结果进行词性标注</span>
 </span></span></code></pre></div><h2 id="2-文本数字化">2. 文本数字化：</h2>
-<p>获得以词为单位的数据，但是要使文字能被机器理解，还需要将文本数字化，一般有两个解决方案：传统的向量空间模型和词向量技术。
-传统向量空间模型是要将一行文本转化为一个向量，典型技术有词袋模型、TF-IDF（词频逆文档频率）模型。词向量技术是将一个词表示为一个低维度、稠密的向量，能使的语义上相近的词向量距离相近，典型技术有word2vec和GloVe。</p>
+<p>获得以词为单位的数据，但是要使文字能被机器理解，还需要将文本数字化，一般有两个解决方案：传统的向量空间模型和词向量技术。</p>
+<p>传统向量空间模型是要将一行文本转化为一个向量，典型技术有词袋模型、TF-IDF（词频逆文档频率）模型。词向量技术是将一个词表示为一个低维度、稠密的向量，能使的语义上相近的词向量距离相近，典型技术有word2vec和GloVe。</p>
 <h3 id="211-词袋模型">2.1.1 词袋模型</h3>
-<p>词袋模型就是要想把多个词组成的一段话转换为一个向量。首先需要给词进行编码。给单词编码一般采用one-hot编码（独热编码），其思想就是给每个不同的单词一个唯一对应的编码。
-比如，“一位布里斯托机器人实验室的机器人专家”可以看成由“一位”、“布里斯托”、“机器人”、“实验室”、“的”、“专家”这6个词组成的序列。
-“一位”编码为 [1,0,0,0,0,0]，“布里斯托”编码为 [0,1,0,0,0,0]，“机器人”编码为 [0,0,1,0,0,0]，“实验室”编码为 [0,0,0,1,0,0]，“的”编码为 [0,0,0,0,1,0]，“专家”编码为 [0,0,0,0,0,1]。单词编码已完成，接下来考虑向量化行文本，即用一个n维的向量表示一段话，向量中的n个位置表示该编码的单词在文本中的权重。
-“一位布里斯托机器人实验室的机器人专家”可以向量化为 [1,1,2,1,1,1]。在这段话中，“机器人”出现了两次，并且“机器人”的编码为 [0,0,1,0,0,0]。以上向量化文本的方式就是词袋模型，向量中每个位置的值为该编码对应的词在这段话中出现的次数。</p>
+<p>词袋模型就是要想把多个词组成的一段话转换为一个向量。首先需要给词进行编码。给单词编码一般采用one-hot编码（独热编码），其思想就是给每个不同的单词一个唯一对应的编码。</p>
+<p>比如，“一位布里斯托机器人实验室的机器人专家”可以看成由“一位”、“布里斯托”、“机器人”、“实验室”、“的”、“专家”这6个词组成的序列。</p>
+<p>“一位”编码为 [1,0,0,0,0,0]，“布里斯托”编码为 [0,1,0,0,0,0]，“机器人”编码为 [0,0,1,0,0,0]，“实验室”编码为 [0,0,0,1,0,0]，“的”编码为 [0,0,0,0,1,0]，“专家”编码为 [0,0,0,0,0,1]。单词编码已完成，接下来考虑向量化行文本，即用一个n维的向量表示一段话，向量中的n个位置表示该编码的单词在文本中的权重。</p>
+<p>“一位布里斯托机器人实验室的机器人专家”可以向量化为 [1,1,2,1,1,1]。在这段话中，“机器人”出现了两次，并且“机器人”的编码为 [0,0,1,0,0,0]。以上向量化文本的方式就是词袋模型，向量中每个位置的值为该编码对应的词在这段话中出现的次数。</p>
 <h3 id="212-tf-idf">2.1.2 TF-IDF</h3>
 <p>TF-IDF模型和词袋模型思想一样，只是向量的值不同。向量中的值为该位置对应的词在文本中的权重，词袋模型认为文本中出现次数多的词权重大，故值就是词在文本中出现的次数。但是单单由词频来决定词在文章中的重要程度是不太准确的，因为有些词在文本中出现频率高但无实际意义，比如“是”，“的”，“等等”等常见词。因此会使用TF-IDF来避免常用词出现频繁的问题。</p>
 <p>TF(词频 - term frequency)：指的是某一个给定的词语在该文件中出现的次数。这个数字通常会被归一化(一般是词频除以文章总词数), 以防止它偏向长的文件。</p>
@@ -210,8 +209,8 @@ NLTK</p>
         data-sizes="auto"
         alt="https://cdn.kesci.com/upload/image/rh3z8p4vcp.jpeg?imageView2/0/w/960/h/960#id=ZaWIv&amp;originHeight=120&amp;originWidth=550&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
         title="https://cdn.kesci.com/upload/image/rh3z8p4vcp.jpeg?imageView2/0/w/960/h/960#id=ZaWIv&amp;originHeight=120&amp;originWidth=550&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
-<p><strong>TF-IDF与一个词在文档中的出现次数成正比，与该词在整个语言中的出现次数成反比</strong>。所以，自动提取关键词的算法就很清楚了，就是计算出文档的每个词的TF-IDF值，然后按降序排列，取排在最前面的几个词。
-<img
+<p><strong>TF-IDF与一个词在文档中的出现次数成正比，与该词在整个语言中的出现次数成反比</strong>。所以，自动提取关键词的算法就很清楚了，就是计算出文档的每个词的TF-IDF值，然后按降序排列，取排在最前面的几个词。</p>
+<p><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="https://cdn.kesci.com/upload/image/rh3zb1u6en.png?imageView2/0/w/960/h/960#id=PDqoB&amp;originHeight=68&amp;originWidth=550&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
@@ -224,7 +223,8 @@ NLTK</p>
 <p>词向量（Word Embedding），是来自词汇表的单词或短语被映射到实数的向量。 从概念上讲，它涉及从每个单词一维的空间到具有更低维度的连续向量空间的数学嵌入。举个例子，比如把&quot;food&quot; 转为词向量 [0.0255, 0.0254, 0.0249, &hellip;&hellip;. , 0.0282]</p>
 <h3 id="222-word2vec">2.2.2 Word2Vec</h3>
 <p>Word2vec 是 Word Embedding 的方法之一。他是 2013 年由谷歌的 Mikolov 提出了一套新的词嵌入方法。本质上，word2vec属于一种DNN深度神经网络，主要在NLP领域里，学习词语的泛化向量表示，做更好的语义理解</p>
-<p>Word2Vec通过Embedding层将one-hot Encoder转化为低维度的连续值（稠密向量），并且其中意思相近的词将被映射到向量空间中相近的位置。Word2Vec有两类训练法：CBOW和Skip-Gram</p>
+<p>Word2Vec通过Embedding层将one-hot Encoder转化为低维度的连续值（稠密向量），并且其中意思相近的词将被映射到向量空间中相近的位置。</p>
+<p>Word2Vec有两类训练法：CBOW和Skip-Gram</p>
 <p>而如果是拿一个词语的上下文语境作为输入，来预测这个词语本身，则是「CBOW 模型」
 论文：<a href="https://arxiv.org/pdf/1301.3781.pdf" target="_blank" rel="noopener noreffer">《Efficient Estimation of Word Representations in Vector Space》</a>
 </p>
@@ -249,14 +249,14 @@ NLTK</p>
         alt="https://cdn.kesci.com/upload/image/rh5vcc5pjy.png?imageView2/0/w/960/h/960#id=ddLsC&amp;originHeight=529&amp;originWidth=886&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title="
         title="https://cdn.kesci.com/upload/image/rh5vcc5pjy.png?imageView2/0/w/960/h/960#id=ddLsC&amp;originHeight=529&amp;originWidth=886&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" /></p>
 <p>假如有一个句子“The quick brown fox jumps over the lazy dog” ，首先选句子中间的一个词作为输入词，例如选取“fox”作为input word；有了input word以后，再定义一个叫做skip_window的参数，它代表着从当前输入词的左边和右边选取词的数量。最终获得滑动窗口中的词（包括input word在内）就是 [&lsquo;quick&rsquo;, &rsquo; brown&rsquo;，&lsquo;fox&rsquo;,&rsquo; jumps&rsquo;, &rsquo; over&rsquo;]，即选取左input word左侧2个词和右侧2个词进入窗口。另一个参数叫num_skips，它代表着从整个窗口中选取多少个不同的词作为output word，如图所示。</p>
-<p>Skip-Gram模型的input word 和output word都是one-hot编码向量，最终模型的输出是一个概率分布。这个概率代表着词典中的每个词是output word的可能性。第二步中在设置skip_window和num_skips都为2的情况下获得了四组训练数据。假如先拿一组数据 (&lsquo;fox&rsquo;, &lsquo;jumps&rsquo;) 来训练神经网络，那么模型通过学习这个训练样本，会告诉词汇表中每个单词是“jumps”的概率大小。模型输出的概率代表着词典中每个词有多大可能性跟input word同时出现。
-<img
+<p>Skip-Gram模型的input word 和output word都是one-hot编码向量，最终模型的输出是一个概率分布。这个概率代表着词典中的每个词是output word的可能性。第二步中在设置skip_window和num_skips都为2的情况下获得了四组训练数据。假如先拿一组数据 (&lsquo;fox&rsquo;, &lsquo;jumps&rsquo;) 来训练神经网络，那么模型通过学习这个训练样本，会告诉词汇表中每个单词是“jumps”的概率大小。模型输出的概率代表着词典中每个词有多大可能性跟input word同时出现。</p>
+<p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://cdn.nlark.com/yuque/0/2023/png/32597202/1691331428463-ada6f7bd-bd4a-4565-821b-dad1eb36ebc9.png#averageHue=%23fefffe&amp;clientId=u3c977591-757a-4&amp;from=paste&amp;height=392&amp;id=u6327a0ca&amp;originHeight=588&amp;originWidth=1076&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=131682&amp;status=done&amp;style=none&amp;taskId=u987ac247-98c6-4254-9e03-157b29b9f62&amp;title=&amp;width=717.3333333333334"
-        data-srcset="https://cdn.nlark.com/yuque/0/2023/png/32597202/1691331428463-ada6f7bd-bd4a-4565-821b-dad1eb36ebc9.png#averageHue=%23fefffe&amp;clientId=u3c977591-757a-4&amp;from=paste&amp;height=392&amp;id=u6327a0ca&amp;originHeight=588&amp;originWidth=1076&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=131682&amp;status=done&amp;style=none&amp;taskId=u987ac247-98c6-4254-9e03-157b29b9f62&amp;title=&amp;width=717.3333333333334, https://cdn.nlark.com/yuque/0/2023/png/32597202/1691331428463-ada6f7bd-bd4a-4565-821b-dad1eb36ebc9.png#averageHue=%23fefffe&amp;clientId=u3c977591-757a-4&amp;from=paste&amp;height=392&amp;id=u6327a0ca&amp;originHeight=588&amp;originWidth=1076&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=131682&amp;status=done&amp;style=none&amp;taskId=u987ac247-98c6-4254-9e03-157b29b9f62&amp;title=&amp;width=717.3333333333334 1.5x, https://cdn.nlark.com/yuque/0/2023/png/32597202/1691331428463-ada6f7bd-bd4a-4565-821b-dad1eb36ebc9.png#averageHue=%23fefffe&amp;clientId=u3c977591-757a-4&amp;from=paste&amp;height=392&amp;id=u6327a0ca&amp;originHeight=588&amp;originWidth=1076&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=131682&amp;status=done&amp;style=none&amp;taskId=u987ac247-98c6-4254-9e03-157b29b9f62&amp;title=&amp;width=717.3333333333334 2x"
+        data-src="/images/NLP.png"
+        data-srcset="/images/NLP.png, /images/NLP.png 1.5x, /images/NLP.png 2x"
         data-sizes="auto"
-        alt="https://cdn.nlark.com/yuque/0/2023/png/32597202/1691331428463-ada6f7bd-bd4a-4565-821b-dad1eb36ebc9.png#averageHue=%23fefffe&amp;clientId=u3c977591-757a-4&amp;from=paste&amp;height=392&amp;id=u6327a0ca&amp;originHeight=588&amp;originWidth=1076&amp;originalType=binary&amp;ratio=1.5&amp;rotation=0&amp;showTitle=false&amp;size=131682&amp;status=done&amp;style=none&amp;taskId=u987ac247-98c6-4254-9e03-157b29b9f62&amp;title=&amp;width=717.3333333333334"
+        alt="/images/NLP.png"
         title="image.png" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

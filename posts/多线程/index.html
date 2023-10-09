@@ -25,7 +25,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wenjie-2000.github.io\/posts\/%E5%A4%9A%E7%BA%BF%E7%A8%8B\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  2056 ,
+        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  2060 ,
         "url": "http:\/\/wenjie-2000.github.io\/posts\/%E5%A4%9A%E7%BA%BF%E7%A8%8B\/","datePublished": "2023-09-25T23:07:06+08:00","dateModified": "2023-09-25T23:07:06+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -83,7 +83,7 @@
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">多线程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>wenjie</a>
 </span>&nbsp;<span class="post-category">included in <a href="/categories/c++/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>C++</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-25">2023-09-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2056 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-25">2023-09-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2060 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -102,8 +102,8 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h3 id="创建">创建</h3>
-<p>简单来说每个线程都和执行一个main函数是一样的（main就是一个线程，只不过这个线程中main是它的入口函数），也需要一个入口函数，并且在入口函数结束之后也会自动退出。
-在为一个线程创建了一个<code>std::thread</code>对象后，需要等待这个线程结束。</p>
+<p>简单来说每个线程都和执行一个main函数是一样的（main就是一个线程，只不过这个线程中main是它的入口函数），也需要一个入口函数，并且在入口函数结束之后也会自动退出。</p>
+<p>在为一个线程创建了一个<code>std::thread</code>对象后，需要等待这个线程结束。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 将do_some_work作为入口函数
@@ -203,8 +203,8 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>可以像下面这样显示指定返回类型：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">[]</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="p">{</span> <span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span> <span class="k">return</span> <span class="n">z</span><span class="p">;</span> <span class="p">}</span>
-</span></span></code></pre></div><p><strong>获取变量</strong>
-lambda函数使用空的[](lambda introducer)就不能引用当前范围内的本地变量；其只能使用全局变量，或将其他值以参数的形式进行传递。当想要访问一个本地变量，需要对其进行捕获（拷贝）。最简单的方式就是将范围内的所有本地变量都进行捕获，使用<code>**[=]**</code>就可以完成这样的功能。函数被创建的时候，就能对本地变量的副本进行访问了。</p>
+</span></span></code></pre></div><p><strong>获取变量</strong></p>
+<p>lambda函数使用空的[](lambda introducer)就不能引用当前范围内的本地变量；其只能使用全局变量，或将其他值以参数的形式进行传递。当想要访问一个本地变量，需要对其进行捕获（拷贝）。最简单的方式就是将范围内的所有本地变量都进行捕获，使用<code>**[=]**</code>就可以完成这样的功能。函数被创建的时候，就能对本地变量的副本进行访问了。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 注意，以下函数的返回值是lambda函数类型std::function，模板函数&lt;int(int)&gt;
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 括号里是传入参数类型，括号外是lambda返回值类型参数
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">make_offseter</span><span class="p">(</span><span class="kt">int</span> <span class="n">offset</span><span class="p">)</span>
@@ -220,7 +220,7 @@ lambda函数使用空的[](lambda introducer)就不能引用当前范围内的�
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">offset_42</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="err">”</span><span class="p">,</span><span class="err">“</span><span class="o">&lt;&lt;</span><span class="n">offset_123</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">offset_42</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="err">”</span><span class="p">,</span><span class="err">“</span><span class="o">&lt;&lt;</span><span class="n">offset_123</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>使用<code>**[&amp;]**</code>对所有本地变量进行引用（不进行拷贝，所以获得的变量值为当前）</p>
+</span></span></code></pre></div><p>使用<code>**[&amp;]**</code>对所有本地变量进行引用（不进行拷贝，所以获得的变量值为当前环境的值）</p>
 <pre tabindex="0"><code>int main()
 {
   int offset=42;  // 1
@@ -255,8 +255,8 @@ lambda函数使用空的[](lambda introducer)就不能引用当前范围内的�
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>                              <span class="c1">// 3. 新线程可能还在运行
 </span></span></span></code></pre></div><p>所以在detach时，一定要确保不会用主线程的变量</p>
 <h4 id="join">join</h4>
-<p>如果需要等待线程，相关的<code>std::thread</code>实例需要使用join()。使用<code>my_thread.join()</code>，就可以确保局部变量在线程完成后，才被销毁。
-确保在主线程异常退出时，还可以执行join()</p>
+<p>如果需要等待线程，相关的<code>std::thread</code>实例需要使用join()。使用<code>my_thread.join()</code>，就可以确保局部变量在线程完成后，才被销毁。</p>
+<p>确保在主线程异常退出时，还可以执行join()</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">thread_guard</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&amp;</span> <span class="n">t</span><span class="p">;</span>
