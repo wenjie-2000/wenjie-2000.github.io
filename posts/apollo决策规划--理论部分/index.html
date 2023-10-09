@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>apollo决策规划--理论部分 - wenjie&#39;s blog</title><meta name="Description" content="纵有疾风起，人生不言弃"><meta property="og:title" content="apollo决策规划--理论部分" />
+<meta property="og:description" content="规划 首先将车辆状态、环境信息转换到frenet坐标系下，进行规划，然后再把规划结果转换到笛卡尔坐标系下，进行控制 轨迹选取 在地图上生成单元选取" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-03T11:09:27+08:00" />
+<meta property="article:modified_time" content="2023-10-03T11:09:27+08:00" /><meta property="og:site_name" content="Hei Blog" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="apollo决策规划--理论部分"/>
+<meta name="twitter:description" content="规划 首先将车辆状态、环境信息转换到frenet坐标系下，进行规划，然后再把规划结果转换到笛卡尔坐标系下，进行控制 轨迹选取 在地图上生成单元选取"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86/" /><link rel="prev" href="http://wenjie-2000.github.io/posts/%E6%96%87%E6%9C%AC%E9%A2%84%E5%A4%84%E7%90%86/" /><link rel="next" href="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E5%AE%9E%E8%B7%B5%E9%83%A8%E5%88%86/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "apollo决策规划--理论部分",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wenjie-2000.github.io\/posts\/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86\/"
+        },"genre": "posts","keywords": "planning, apollo","wordcount":  717 ,
+        "url": "http:\/\/wenjie-2000.github.io\/posts\/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86\/","datePublished": "2023-10-03T11:09:27+08:00","dateModified": "2023-10-03T11:09:27+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "wenjie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="wenjie&#39;s blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg"
+        data-srcset="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg, https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg 1.5x, https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg 2x"
+        data-sizes="auto"
+        alt="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg"
+        title="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg" />Hei Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="wenjie&#39;s blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg"
+        data-srcset="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg, https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg 1.5x, https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg 2x"
+        data-sizes="auto"
+        alt="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg"
+        title="https://fc.sinaimg.cn/large/006pBQJ5ly1hio7gjrob8j30jg0pe3zb.jpg" />Hei Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">apollo决策规划--理论部分</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>wenjie</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/planning/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>planning</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-10-03">2023-10-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;717 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#规划">规划</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="规划">规划</h3>
+<p><strong>首先将车辆状态、环境信息转换到frenet坐标系下，进行规划，然后再把规划结果转换到笛卡尔坐标系下，进行控制</strong></p>
+<h4 id="轨迹选取">轨迹选取</h4>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017107749.png" title="在地图上生成单元选取框" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017107749.png" data-sub-html="<h2>在地图上生成单元选取框</h2><p>在地图上生成单元选取框</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017107749.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017107749.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017107749.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017107749.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017107749.png" />
+    </a><figcaption class="image-caption">在地图上生成单元选取框</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017105155.png" title="在选取框中进行采样" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017105155.png" data-sub-html="<h2>在选取框中进行采样</h2><p>在选取框中进行采样</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017105155.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017105155.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017105155.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017105155.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017105155.png" />
+    </a><figcaption class="image-caption">在选取框中进行采样</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112952.png" title="从每个框里的采样点进行随机选取，连接成路径" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017112952.png" data-sub-html="<h2>从每个框里的采样点进行随机选取，连接成路径</h2><p>从每个框里的采样点进行随机选取，连接成路径</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112952.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112952.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112952.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112952.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017112952.png" />
+    </a><figcaption class="image-caption">从每个框里的采样点进行随机选取，连接成路径</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117094.png" title="从多条路径中选择cost最小的" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017117094.png" data-sub-html="<h2>从多条路径中选择cost最小的</h2><p>从多条路径中选择cost最小的</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117094.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117094.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117094.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117094.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017117094.png" />
+    </a><figcaption class="image-caption">从多条路径中选择cost最小的</figcaption>
+    </figure></p>
+<p>成本函数包括：</p>
+<ol>
+<li>偏离车道中心</li>
+<li>与障碍物的距离（安全性）</li>
+<li>速度和曲率的变化（平滑性）</li>
+<li>对车辆的压力</li>
+</ol>
+<h4 id="速度规划">速度规划</h4>
+<p>ST图，纵坐标为汽车的纵向位移，横坐标为时间</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111648.png"
+        data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111648.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111648.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111648.png 2x"
+        data-sizes="auto"
+        alt="/images/apollo决策规划--理论部分/20231009_2017111648.png"
+        title="image.png" /></p>
+<p>在选择好路径之后，需要规划出在该路径上的速度，同样在ST图中进行规划：</p>
+<p>首先把ST图分解为一个一个小格子（栅格地图），速度规划就是把格子的顶点进行连接（每条直线的速度不变）</p>
+<p>然后把障碍物放到ST图中，表示为黄色矩形，该矩形表示在<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017115971.svg"
+        data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017115971.svg, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017115971.svg 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017115971.svg 2x"
+        data-sizes="auto"
+        alt="/images/apollo决策规划--理论部分/20231009_2017115971.svg"
+        title="/images/apollo决策规划--理论部分/20231009_2017115971.svg" />时间区间内，会在<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112031.svg"
+        data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112031.svg, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112031.svg 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112031.svg 2x"
+        data-sizes="auto"
+        alt="/images/apollo决策规划--理论部分/20231009_2017112031.svg"
+        title="/images/apollo决策规划--理论部分/20231009_2017112031.svg" />路段出现障碍物（预测模块给出），那么在速度规划的时候就绝对不能碰到黄色矩形部分</p>
+<p><strong>把速度规划问题转换成了搜索问题</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112719.png"
+        data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112719.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112719.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112719.png 2x"
+        data-sizes="auto"
+        alt="/images/apollo决策规划--理论部分/20231009_2017112719.png"
+        title="image.png" /></p>
+<h4 id="lattice规划">lattice规划</h4>
+<p>使用lattice方法进行轨迹规划：</p>
+<p>首先把三维的路径（纵向、横向、时间）解耦成 <code>纵向规划</code> 和 <code>横向规划</code>，纵向规划使用ST图，横向规划使用SL图</p>
+<p>然后再将ST和SL结合起来</p>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111117.png" title="SL图是相对于纵向轨迹的横向偏移" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017111117.png" data-sub-html="<h2>SL图是相对于纵向轨迹的横向偏移</h2><p>SL图是相对于纵向轨迹的横向偏移</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111117.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111117.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111117.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017111117.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017111117.png" />
+    </a><figcaption class="image-caption">SL图是相对于纵向轨迹的横向偏移</figcaption>
+    </figure></p>
+<p>lattice规划是根据起始状态和终止状态进行规划的方法，所以首先我们应该明确终止状态是什么：</p>
+<h5 id="st图终止状态">ST图终止状态</h5>
+<h6 id="巡航">巡航</h6>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112544.png" title="终止状态加速度为0" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017112544.png" data-sub-html="<h2>终止状态加速度为0</h2><p>终止状态加速度为0</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112544.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112544.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112544.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017112544.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017112544.png" />
+    </a><figcaption class="image-caption">终止状态加速度为0</figcaption>
+    </figure></p>
+<h6 id="跟随">跟随</h6>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117481.png" title="终止状态的a和v需要根据前车决定" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017117481.png" data-sub-html="<h2>终止状态的a和v需要根据前车决定</h2><p>终止状态的a和v需要根据前车决定</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117481.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117481.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117481.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017117481.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017117481.png" />
+    </a><figcaption class="image-caption">终止状态的a和v需要根据前车决定</figcaption>
+    </figure></p>
+<h6 id="停止">停止</h6>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017119797.png" title="终止状态的a和v为0" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017119797.png" data-sub-html="<h2>终止状态的a和v为0</h2><p>终止状态的a和v为0</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017119797.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017119797.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017119797.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017119797.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017119797.png" />
+    </a><figcaption class="image-caption">终止状态的a和v为0</figcaption>
+    </figure></p>
+<h5 id="sl图的终止状态">SL图的终止状态</h5>
+<p>保持车在车道线中心，终止状态的<code>朝向</code>和<code>位置</code>的一阶和二阶导数都为0（即纵向和横向的a、v都为0）</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017123415.png"
+        data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017123415.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017123415.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017123415.png 2x"
+        data-sizes="auto"
+        alt="/images/apollo决策规划--理论部分/20231009_2017123415.png"
+        title="image.png" /></p>
+<p>然后使用二次规划方法得到ST和SL图，再将二者结合成三维轨迹</p>
+<p><figure><a class="lightgallery" href="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128272.png" title="通过SL和ST共有的S进行结合" data-thumbnail="/images/apollo决策规划--理论部分/20231009_2017128272.png" data-sub-html="<h2>通过SL和ST共有的S进行结合</h2><p>通过SL和ST共有的S进行结合</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128272.png"
+            data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128272.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128272.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128272.png 2x"
+            data-sizes="auto"
+            alt="/images/apollo决策规划--理论部分/20231009_2017128272.png" />
+    </a><figcaption class="image-caption">通过SL和ST共有的S进行结合</figcaption>
+    </figure></p>
+<h4 id="二次规划">二次规划</h4>
+<p>第一步和第二步的路径和速度都是不平滑的，所以要用二次规划对其进行优化</p>
+<p>最后将路径和速度进行结合，得到规划结果</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128399.png"
+        data-srcset="/images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128399.png, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128399.png 1.5x, /images/apollo%e5%86%b3%e7%ad%96%e8%a7%84%e5%88%92--%e7%90%86%e8%ae%ba%e9%83%a8%e5%88%86/20231009_2017128399.png 2x"
+        data-sizes="auto"
+        alt="/images/apollo决策规划--理论部分/20231009_2017128399.png"
+        title="image.png" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-10-03</span>
+            </div><div class="post-info-license">
+                <span><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86/" data-title="apollo决策规划--理论部分" data-hashtags="planning,apollo"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86/" data-hashtag="planning"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86/" data-title="apollo决策规划--理论部分"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86/" data-title="apollo决策规划--理论部分"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@6.20.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86/" data-title="apollo决策规划--理论部分"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/planning/">planning</a>,&nbsp;<a href="/tags/apollo/">apollo</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%96%87%E6%9C%AC%E9%A2%84%E5%A4%84%E7%90%86/" class="prev" rel="prev" title="文本预处理"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>文本预处理</a>
+            <a href="/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E5%AE%9E%E8%B7%B5%E9%83%A8%E5%88%86/" class="next" rel="next" title="apollo决策规划--实践部分">apollo决策规划--实践部分<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">wenjie</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.1/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
