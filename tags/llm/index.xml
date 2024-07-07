@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>LLM - Tag - wenjie&#39;s blog</title>
+        <link>http://wenjie-2000.github.io/tags/llm/</link>
+        <description>LLM - Tag - wenjie&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 06 Jan 2024 11:31:56 &#43;0800</lastBuildDate><atom:link href="http://wenjie-2000.github.io/tags/llm/" rel="self" type="application/rss+xml" /><item>
+    <title>RLHF</title>
+    <link>http://wenjie-2000.github.io/posts/rlhf/</link>
+    <pubDate>Sat, 06 Jan 2024 11:31:56 &#43;0800</pubDate>
+    <author>wenjie</author>
+    <guid>http://wenjie-2000.github.io/posts/rlhf/</guid>
+    <description><![CDATA[abstract 原因 过去几年里各种 LLM 根据人类输入提示 (prompt) 生成多样化文本的能力令人印象深刻。然而，对生成结果的评估是主观和依赖上下文的，例如，我们希望模型生成]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>碰撞检测算法 - wenjie&#39;s blog</title><meta name="Description" content="纵有疾风起，人生不言弃"><meta property="og:url" content="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/">
+  <meta property="og:site_name" content="wenjie&#39;s blog">
+  <meta property="og:title" content="碰撞检测算法">
+  <meta property="og:description" content="粗检测 – 筛选明显不相交的元素 包围型法 包围形方法的基本思想是用一个简单的包围形状（圆、矩形）将复杂不规则的物体包围住，当两个包围形不相交时，则">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-04T23:08:18+08:00">
+    <meta property="article:modified_time" content="2024-03-04T23:08:18+08:00">
+    <meta property="article:tag" content="Planning">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="碰撞检测算法">
+  <meta name="twitter:description" content="粗检测 – 筛选明显不相交的元素 包围型法 包围形方法的基本思想是用一个简单的包围形状（圆、矩形）将复杂不规则的物体包围住，当两个包围形不相交时，则">
+<meta name="application-name" content="wenjie&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="wenjie&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" /><link rel="prev" href="http://wenjie-2000.github.io/posts/rlhf/" /><link rel="next" href="http://wenjie-2000.github.io/posts/limsim&#43;&#43;/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "碰撞检测算法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wenjie-2000.github.io\/posts\/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95\/"
+        },"genre": "posts","keywords": "planning","wordcount":  2177 ,
+        "url": "http:\/\/wenjie-2000.github.io\/posts\/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95\/","datePublished": "2024-03-04T23:08:18+08:00","dateModified": "2024-03-04T23:08:18+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "wenjie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="wenjie&#39;s blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/fly.jpg"
+        data-srcset="/images/fly.jpg, /images/fly.jpg 1.5x, /images/fly.jpg 2x"
+        data-sizes="auto"
+        alt="/images/fly.jpg"
+        title="/images/fly.jpg" />Hei Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="wenjie&#39;s blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/fly.jpg"
+        data-srcset="/images/fly.jpg, /images/fly.jpg 1.5x, /images/fly.jpg 2x"
+        data-sizes="auto"
+        alt="/images/fly.jpg"
+        title="/images/fly.jpg" />Hei Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">碰撞检测算法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>wenjie</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/planning/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Planning</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-04">2024-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2177 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#粗检测----筛选明显不相交的元素">粗检测 &ndash; 筛选明显不相交的元素</a></li>
+        <li><a href="#细检测----检测是否相交">细检测 &ndash; 检测是否相交</a></li>
+        <li><a href="#点在三角形内部">点在三角形内部</a></li>
+        <li><a href="#点在多边形内部pippoint-in-polygon">点在多边形内部PIP（Point in Polygon）</a></li>
+        <li><a href="#两条线段是否相交">两条线段是否相交</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="粗检测----筛选明显不相交的元素">粗检测 &ndash; 筛选明显不相交的元素</h3>
+<h4 id="包围型法">包围型法</h4>
+<p><strong>包围形方法的基本思想是用一个简单的包围形状（圆、矩形）将复杂不规则的物体包围住，当两个包围形不相交时，则两个物体肯定不相交。</strong></p>
+<p>包围形可分为：</p>
+<ul>
+<li>外接圆形</li>
+<li>轴对齐包围矩形（Axis Aligned Bounding Box，AABB）</li>
+</ul>
+<h5 id="外接圆">外接圆</h5>
+<p>判断依据：只要两个圆形的圆心距离 &gt; 两个圆的半径之和，则这两个圆不相交。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097120.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097120.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097120.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097120.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311097120.png"
+        title="/images/碰撞检测算法/20240707_2311097120.png" /><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094823.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094823.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094823.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094823.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311094823.png"
+        title="/images/碰撞检测算法/20240707_2311094823.png" /></p>
+<p>但是只用一个圆的精度是不够的，可以用多个圆来覆盖，注意：尽可能减少同一个物体上圆的覆盖面积</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095621.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095621.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095621.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095621.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311095621.png"
+        title="/images/碰撞检测算法/20240707_2311095621.png" /></p>
+<h5 id="aabb">AABB</h5>
+<p>轴对齐包围矩形（Axis Aligned Bounding Box，AABB），**即用一个矩形包围车体，且矩形的边与某个坐标轴平行，**只要在 X 轴 或 Y 轴上没有重合，则这两个矩形不相交。</p>
+<p>判断依据：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094203.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094203.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094203.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094203.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311094203.png"
+        title="/images/碰撞检测算法/20240707_2311094203.png" /></p>
+<h3 id="细检测----检测是否相交">细检测 &ndash; 检测是否相交</h3>
+<ul>
+<li>转向包围矩形（Oriented Bounding Box，OBB）就是找一个最小的包围物体的矩形，这在自动驾驶系统中也是最常用的，感知模块给出物体的轮廓通常就是此形状</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094947.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094947.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094947.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094947.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311094947.png"
+        title="/images/碰撞检测算法/20240707_2311094947.png" /></p>
+<h4 id="分离轴定理separating-axis-theoremsat">分离轴定理（<strong>Separating Axis Theorem，SAT</strong>）</h4>
+<p><strong>适用于 bounding box 和 polygon，<strong>在实际应用中，为了提高效率，通常</strong>先使用基于轴对齐包围矩形（AABB）的方法进行粗略的碰撞检测，然后再使用 分离轴定理（SAT）做精细碰撞检测</strong>。</p>
+<p>概念：通过判断任意两个 凸多边形 在任意角度下的投影是否均存在重叠，来判断是否发生碰撞。若在某一角度光源下，两物体的投影存在间隙，则为不碰撞，否则为发生碰撞。</p>
+<p>注意：</p>
+<p>分离轴定理只适合<strong>凸多边形</strong>，所以如果是<strong>凹多边形</strong>的话需要转换成多个**凸多边形,**具体转换算法参考git上<a href="https://link.zhihu.com/?target=https%3A//github.com/schteppe/poly-decomp.js" target="_blank" rel="noopener noreffer"><strong>https://github.com/schteppe/poly-decomp.js</strong></a>
+ 用于将二维多边形分解为凸块的库。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098062.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098062.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098062.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098062.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311098062.png"
+        title="/images/碰撞检测算法/20240707_2311098062.png" /><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094048.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094048.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094048.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311094048.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311094048.png"
+        title="/images/碰撞检测算法/20240707_2311094048.png" /></p>
+<p>上图中的黑线为分离线（Seperating line），与之垂直的绿线为分离轴（Separating axis），图中虚线表示的是多边形在分离轴上的投影。</p>
+<p>实际应用中，遍历所有角度的分离轴是不现实的，受益于多边形的性质，对于两个都是多边形的物体，<strong>只需要依次在每条边的垂直线做投影即可</strong>。我的理解是，如果两个多边形有重合的话，那么必然在重合边的垂线上的投影是重合的</p>
+<p>以下图中的两个多边形 A 和 B 为例，分离轴定理的具体步骤为：</p>
+<ol>
+<li>首先根据边1的两个顶点位置坐标，计算出边1的向量，设为（x，y）；</li>
+<li>进而求出边1的法向量，作为分离轴，为（y, -x）或（-y，x）。若需要求两个多边形的最小分离距离，这里的法向量还需要化为单位向量；若只需判断两个多边形是否相交，则不需要化为单位向量；</li>
+<li>依次将多边形 A 和 B 的所有顶点与原点组成的向量投影到这个分离轴上，并记录两个多边形顶点投影到分离轴上的最小值和最大值（Pmin，Pmax），形成一个投影线段；</li>
+<li>判断这两个投影线段是否发生重叠，若不重叠，则有 （PAmax &lt; PBmin）||（PAmin &gt; PBmax）；</li>
+<li>若两个投影线段不重叠，则代表存在这样一条直线将两个多边形分开，两个多边形不相交，可以直接退出循环；</li>
+<li>若两个投影线段重叠，则回到步骤1，继续以边2的法向量作为分离轴，进行投影计算；</li>
+<li>当两个多边形的所有边都检查完之后，找不到这样一条分离的直线，则意味着两个多边形相交。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311099897.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311099897.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311099897.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311099897.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311099897.png"
+        title="/images/碰撞检测算法/20240707_2311099897.png" /></p>
+<h4 id="gjkgilbertjohnsonkeerthi"><strong>GJK（Gilbert–Johnson–Keerthi）</strong></h4>
+<h3 id="点在三角形内部">点在三角形内部</h3>
+<h4 id="面积求和">面积求和</h4>
+<p>如果点在三角形内部，那么三个小三角形的面积一定＝大三角形的面积</p>
+<p>可以用海伦公式解</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097892.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097892.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097892.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311097892.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311097892.png"
+        title="/images/碰撞检测算法/20240707_2311097892.png" /><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098558.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098558.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098558.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311098558.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311098558.png"
+        title="/images/碰撞检测算法/20240707_2311098558.png" /></p>
+<p>先求出三条边的长度abc，然后分别计算面积，判断是否相等</p>
+<h4 id="向量叉乘">向量叉乘</h4>
+<ul>
+<li>若点P在三角形内部时，沿逆时针方向，则点P一直在向量AB、BC、CA的左侧；</li>
+<li>若点P在三角形外部时，则点P必然在AB、BC、CA某一向量的右侧。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095232.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095232.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095232.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311095232.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311095232.png"
+        title="/images/碰撞检测算法/20240707_2311095232.png" /></p>
+<p>若是三角形三点是顺时针方向，则若点P在三角形内部时，点P一直在向量AB、BC、CA的右侧。</p>
+<p>对于点P在三角形的某一边上或与某一顶点重合的特殊情况，上述两种方法同样适用，需要注意一下**临界条件（即叉乘=0）**的设置。</p>
+<h3 id="点在多边形内部pippoint-in-polygon">点在多边形内部PIP（Point in Polygon）</h3>
+<p><a href="https://www.toutiao.com/article/6643743002114130436/?group_id=6643743002114130436&amp;wid=1709463411493" target="_blank" rel="noopener noreffer">https://www.toutiao.com/article/6643743002114130436/?group_id=6643743002114130436&amp;wid=1709463411493</a>
+</p>
+<p>从该点做一条射线，计算它跟多边形边界的交点个数，如果交点个数为奇数，那么点在多边形内部，否则点在多边形外部</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311107116.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311107116.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311107116.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311107116.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311107116.png"
+        title="/images/碰撞检测算法/20240707_2311107116.png" /></p>
+<h3 id="两条线段是否相交">两条线段是否相交</h3>
+<h4 id="step1-首先使用aabb粗筛">step1. 首先使用AABB粗筛</h4>
+<h4 id="step2-然后通过叉乘进行判断">step2. 然后通过叉乘进行判断</h4>
+<p>其次，如下图。AB与CD相交必然有<strong>A、B在线段CD两边，C、D在线段AB两边（两个要同时满足！）</strong>。</p>
+<p>根据上面的公式和右手螺旋法则，如果相交，AB X AC与AB X AD必然异号；同样的，DC X DA与DC X DB也必然异号。</p>
+<p>特别的，如果B在CD上时，求得的z坐标值是0。所以只要同时满足<code>(AB X AC) * (AB X AD)≤ 0</code>，<code>(DC X DA) * (DC X DB) ≤ 0</code>，就能保证必然相交</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311109096.png"
+        data-srcset="/images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311109096.png, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311109096.png 1.5x, /images/%e7%a2%b0%e6%92%9e%e6%a3%80%e6%b5%8b%e7%ae%97%e6%b3%95/20240707_2311109096.png 2x"
+        data-sizes="auto"
+        alt="/images/碰撞检测算法/20240707_2311109096.png"
+        title="/images/碰撞检测算法/20240707_2311109096.png" /></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">line</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">xa</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">ya</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">xb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">yb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">line</span><span class="p">(){}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">line</span><span class="p">(</span><span class="kt">int</span> <span class="n">xa</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ya</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xb</span><span class="p">,</span> <span class="kt">int</span> <span class="n">yb</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">this</span><span class="o">-&gt;</span><span class="n">xa</span> <span class="o">=</span> <span class="n">xa</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">this</span><span class="o">-&gt;</span><span class="n">ya</span> <span class="o">=</span> <span class="n">ya</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">this</span><span class="o">-&gt;</span><span class="n">xb</span> <span class="o">=</span> <span class="n">xb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">this</span><span class="o">-&gt;</span><span class="n">yb</span> <span class="o">=</span> <span class="n">yb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="nf">get_max_x</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">xa</span> <span class="o">&gt;</span> <span class="n">xb</span> <span class="o">?</span> <span class="nl">xa</span> <span class="p">:</span> <span class="n">xb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="nf">get_min_x</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">xa</span> <span class="o">&gt;</span> <span class="n">xb</span> <span class="o">?</span> <span class="nl">xb</span> <span class="p">:</span> <span class="n">xa</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="nf">get_max_y</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">ya</span> <span class="o">&gt;</span> <span class="n">yb</span> <span class="o">?</span> <span class="nl">ya</span> <span class="p">:</span> <span class="n">yb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="nf">get_min_y</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">ya</span> <span class="o">&gt;</span> <span class="n">yb</span> <span class="o">?</span> <span class="nl">yb</span> <span class="p">:</span> <span class="n">ya</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">is_intersect</span><span class="p">(</span><span class="n">line</span> <span class="n">myline1</span><span class="p">,</span> <span class="n">line</span> <span class="n">myline2</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">get_max_x</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">myline2</span><span class="p">.</span><span class="n">get_min_x</span><span class="p">()</span> <span class="o">||</span> 
+</span></span><span class="line"><span class="cl">	   <span class="n">myline2</span><span class="p">.</span><span class="n">get_max_x</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">myline1</span><span class="p">.</span><span class="n">get_min_x</span><span class="p">()</span> <span class="o">||</span>
+</span></span><span class="line"><span class="cl">	   <span class="n">myline1</span><span class="p">.</span><span class="n">get_max_y</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">myline2</span><span class="p">.</span><span class="n">get_min_y</span><span class="p">()</span> <span class="o">||</span> 
+</span></span><span class="line"><span class="cl">	   <span class="n">myline2</span><span class="p">.</span><span class="n">get_max_y</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">myline1</span><span class="p">.</span><span class="n">get_min_y</span><span class="p">())</span>   <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">res1</span> <span class="o">=</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">xa</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">xb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">ya</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">ya</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">xa</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">xb</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">res2</span> <span class="o">=</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">xa</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">xb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">yb</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">ya</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">xb</span> <span class="o">-</span> <span class="n">myline1</span><span class="p">.</span><span class="n">xb</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">res3</span> <span class="o">=</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">xa</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">xb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">ya</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">ya</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">xa</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">xb</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">res4</span> <span class="o">=</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">xa</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">xb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">yb</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">myline2</span><span class="p">.</span><span class="n">ya</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">yb</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">myline1</span><span class="p">.</span><span class="n">xb</span> <span class="o">-</span> <span class="n">myline2</span><span class="p">.</span><span class="n">xb</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">res1</span> <span class="o">*</span> <span class="n">res2</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">res3</span> <span class="o">*</span> <span class="n">res4</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="参考">参考</h3>
+<p><a href="https://www.zhihu.com/people/zhimakaimencsd/posts?page=1" target="_blank" rel="noopener noreffer">算法集市 - 知乎</a>
+</p>
+<p>碰撞检测ppt：</p>
+<p><a href="https://github.com/CHH3213/Autonomous_driving-bilibili/tree/master/Math_Geometry" target="_blank" rel="noopener noreffer">https://github.com/CHH3213/Autonomous_driving-bilibili/tree/master/Math_Geometry </a>
+</p>
+<p>参考资料：</p>
+<p><a href="https://learnopengl.com/In-Practice/2D-Game/Collisions/Collision-detection" target="_blank" rel="noopener noreffer">LearnOpenGL - Collision detection</a>
+</p>
+<p><a href="https://zhuanlan.zhihu.com/p/163590893" target="_blank" rel="noopener noreffer">AABB-box碰撞检测</a>
+</p>
+<p><a href="https://github.com/ApolloAuto/apollo/blob/master/modules/common/math/box2d.cc" target="_blank" rel="noopener noreffer">https://github.com/ApolloAuto/apollo/blob/master/modules/common/math/box2d.cc</a>
+ (代码参考)</p>
+<p><a href="https://blog.csdn.net/AgingMoon/article/details/110328007" target="_blank" rel="noopener noreffer">自动驾驶-轨迹碰撞检测方法_自动驾驶碰撞检测-CSDN博客</a>
+</p>
+<p><a href="https://en.wikipedia.org/wiki/Sweep_and_prune" target="_blank" rel="noopener noreffer">https://en.wikipedia.org/wiki/Sweep_and_prune</a>
+</p>
+<p><a href="https://sci-hub.se/https://doi.org/10.1016/B978-155860594-7/50014-X" target="_blank" rel="noopener noreffer">Sci-Hub | INTERSECTION IN 3D. Geometric Tools for Computer Graphics, 481–662 | 10.1016/b978-155860594-7/50014-x</a>
+</p>
+<p><a href="https://sci-hub.se/10.1109/ivs.2010.5547976" target="_blank" rel="noopener noreffer">Sci-Hub | Fast collision checking for intelligent vehicle motion planning. 2010 IEEE Intelligent Vehicles Symposium | 10.1109/ivs.2010.5547976</a>
+</p>
+<p><strong>个人博客，讲述了AABB算法在具体编程实现时的优化算法，从而在多个AABB判断相交的时候能够加快速度</strong></p>
+<p><a href="https://magiciana.github.io/" target="_blank" rel="noopener noreffer">https://magiciana.github.io/</a>
+</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-03-04</span>
+            </div><div class="post-info-license">
+                <span><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" data-title="碰撞检测算法" data-hashtags="planning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" data-hashtag="planning"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" data-title="碰撞检测算法"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" data-title="碰撞检测算法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@6.20.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" data-title="碰撞检测算法"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/planning/">Planning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/rlhf/" class="prev" rel="prev" title="RLHF"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>RLHF</a>
+            <a href="/posts/limsim&#43;&#43;/" class="next" rel="next" title="LimSim&#43;&#43;">LimSim&#43;&#43;<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.128.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">wenjie</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.1/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

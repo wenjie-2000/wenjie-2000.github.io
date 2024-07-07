@@ -3,7 +3,31 @@
         <title>All Posts - wenjie&#39;s blog</title>
         <link>http://wenjie-2000.github.io/posts/</link>
         <description>All Posts | wenjie&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 06 Oct 2023 15:19:57 &#43;0800</lastBuildDate><atom:link href="http://wenjie-2000.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 20 May 2024 15:11:10 &#43;0800</lastBuildDate><atom:link href="http://wenjie-2000.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>LimSim&#43;&#43;</title>
+    <link>http://wenjie-2000.github.io/posts/limsim&#43;&#43;/</link>
+    <pubDate>Mon, 20 May 2024 15:11:10 &#43;0800</pubDate>
+    <author>wenjie</author>
+    <guid>http://wenjie-2000.github.io/posts/limsim&#43;&#43;/</guid>
+    <description><![CDATA[LimSim++：多模态大模型在自动驾驶中的新舞台 论文名称：LimSim++: A Closed-Loop Platform for Deploying Multimodal LLMs in Autonomous Driving 项目主页：https://pjlab-ad]]></description>
+</item>
+<item>
+    <title>碰撞检测算法</title>
+    <link>http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/</link>
+    <pubDate>Mon, 04 Mar 2024 23:08:18 &#43;0800</pubDate>
+    <author>wenjie</author>
+    <guid>http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/</guid>
+    <description><![CDATA[粗检测 &ndash; 筛选明显不相交的元素 包围型法 包围形方法的基本思想是用一个简单的包围形状（圆、矩形）将复杂不规则的物体包围住，当两个包围形不相交时，则]]></description>
+</item>
+<item>
+    <title>RLHF</title>
+    <link>http://wenjie-2000.github.io/posts/rlhf/</link>
+    <pubDate>Sat, 06 Jan 2024 11:31:56 &#43;0800</pubDate>
+    <author>wenjie</author>
+    <guid>http://wenjie-2000.github.io/posts/rlhf/</guid>
+    <description><![CDATA[abstract 原因 过去几年里各种 LLM 根据人类输入提示 (prompt) 生成多样化文本的能力令人印象深刻。然而，对生成结果的评估是主观和依赖上下文的，例如，我们希望模型生成]]></description>
+</item>
+<item>
     <title>apollo决策规划--实践部分</title>
     <link>http://wenjie-2000.github.io/posts/apollo%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92--%E5%AE%9E%E8%B7%B5%E9%83%A8%E5%88%86/</link>
     <pubDate>Fri, 06 Oct 2023 15:19:57 &#43;0800</pubDate>
