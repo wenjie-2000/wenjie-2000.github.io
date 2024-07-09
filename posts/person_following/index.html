@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>An Autonomous Robot for Collision-Free Person Following through Model Predictive Control - wenjie&#39;s blog</title><meta name="Description" content="纵有疾风起，人生不言弃"><meta property="og:url" content="http://wenjie-2000.github.io/posts/person_following/">
+  <meta property="og:site_name" content="wenjie&#39;s blog">
+  <meta property="og:title" content="An Autonomous Robot for Collision-Free Person Following through Model Predictive Control">
+  <meta property="og:description" content="论文名称：An Autonomous Robot for Collision-Free Person Following through Model Predictive Control Introduction 目前，在具有动态障碍物的复杂环境中对行人进行稳定跟随较为困难，主要是由于环境具有高度不确定性，同时跟随对">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-10T02:23:27+08:00">
+    <meta property="article:modified_time" content="2024-04-10T02:23:27+08:00">
+    <meta property="article:tag" content="Planning">
+    <meta property="article:tag" content="Robot">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="An Autonomous Robot for Collision-Free Person Following through Model Predictive Control">
+  <meta name="twitter:description" content="论文名称：An Autonomous Robot for Collision-Free Person Following through Model Predictive Control Introduction 目前，在具有动态障碍物的复杂环境中对行人进行稳定跟随较为困难，主要是由于环境具有高度不确定性，同时跟随对">
+<meta name="application-name" content="wenjie&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="wenjie&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wenjie-2000.github.io/posts/person_following/" /><link rel="prev" href="http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" /><link rel="next" href="http://wenjie-2000.github.io/posts/limsim&#43;&#43;/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "An Autonomous Robot for Collision-Free Person Following through Model Predictive Control",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wenjie-2000.github.io\/posts\/person_following\/"
+        },"genre": "posts","keywords": "planning, robot","wordcount":  558 ,
+        "url": "http:\/\/wenjie-2000.github.io\/posts\/person_following\/","datePublished": "2024-04-10T02:23:27+08:00","dateModified": "2024-04-10T02:23:27+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "wenjie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="wenjie&#39;s blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/fly.jpg"
+        data-srcset="/images/fly.jpg, /images/fly.jpg 1.5x, /images/fly.jpg 2x"
+        data-sizes="auto"
+        alt="/images/fly.jpg"
+        title="/images/fly.jpg" />Hei Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/cv/"> CV </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="wenjie&#39;s blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/fly.jpg"
+        data-srcset="/images/fly.jpg, /images/fly.jpg 1.5x, /images/fly.jpg 2x"
+        data-sizes="auto"
+        alt="/images/fly.jpg"
+        title="/images/fly.jpg" />Hei Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/cv/" title="">CV</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">An Autonomous Robot for Collision-Free Person Following through Model Predictive Control</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>wenjie</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/my-project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>My Project</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-10">2024-04-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;558 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction"><strong>Introduction</strong></a></li>
+        <li><a href="#contribution"><strong>Contribution</strong></a></li>
+        <li><a href="#results"><strong>Results</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>论文名称：<strong><a href="https://ieeexplore.ieee.org/document/10312073" target="_blank" rel="noopener noreffer">An Autonomous Robot for Collision-Free Person Following through Model Predictive Control</a>
+</strong></p>
+<h3 id="introduction"><strong>Introduction</strong></h3>
+<p>目前，在具有动态障碍物的复杂环境中对行人进行稳定跟随较为困难，主要是由于环境具有高度不确定性，同时跟随对象还具备较为灵活的行动。为了应对这些挑战，本文提出了移动机器人的运动规划框架。该方法将动态避障和目标跟随整合到一个基于模型预测控制（MPC）的优化问题中，并设置了终端约束。为了保证在动态环境中进行跟随任务的安全性，本文使用高频状态估计器来预测人类行为，并使用弹簧模型来模拟环境中的动态障碍物，使机器人远离障碍物。整体设计如下图所示：</p>
+<p><figure><a class="lightgallery" href="/images/person_following/frame.jpg" title="&amp;ldquo;frame&amp;rdquo;" data-thumbnail="/images/person_following/frame.jpg" data-sub-html="<h2>framework</h2><p>&amp;ldquo;frame&amp;rdquo;</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/person_following/frame.jpg"
+            data-srcset="/images/person_following/frame.jpg, /images/person_following/frame.jpg 1.5x, /images/person_following/frame.jpg 2x"
+            data-sizes="auto"
+            alt="/images/person_following/frame.jpg" />
+    </a><figcaption class="image-caption">framework</figcaption>
+    </figure></p>
+<h3 id="contribution"><strong>Contribution</strong></h3>
+<ol>
+<li>
+<p>通过扇形终端约束将机器人终端位姿的求解空间调整到跟随对象附近合适的位置，从而实现<strong>跟随</strong>的效果；</p>
+</li>
+<li>
+<p>通过虚拟弹簧模型，将机器人与动态障碍物之间的安全距离转化为软约束和硬约束加入到优化问题中，从而保证跟踪过程的<strong>安全</strong>。</p>
+</li>
+</ol>
+<p><figure><a class="lightgallery" href="/images/person_following/constrain.png" title="constrain" data-thumbnail="/images/person_following/constrain.png" data-sub-html="<h2>constrains</h2><p>constrain</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/person_following/constrain.png"
+            data-srcset="/images/person_following/constrain.png, /images/person_following/constrain.png 1.5x, /images/person_following/constrain.png 2x"
+            data-sizes="auto"
+            alt="/images/person_following/constrain.png" />
+    </a><figcaption class="image-caption">constrains</figcaption>
+    </figure></p>
+<h3 id="results"><strong>Results</strong></h3>
+<p>本文与基于DWA的方法进行了对比，发现在跟随过程中，DWA往往因为避障而导致跟随出现滞后性，这说明行人跟随任务需要一个具有预测功能的规划控制框架才能更好的完成；同时，基于MPC方法的行人跟随效果更好，不仅与行人的跟踪距离更短，同时角度误差也更小（这里角度误差指的是行人方向与机器人方向之间的误差）。</p>
+<p><figure><a class="lightgallery" href="/images/person_following/compare.jpg" title="compare" data-thumbnail="/images/person_following/compare.jpg" data-sub-html="<h2>本文方法与基于DWA方法的跟随效果对比，其中(a) (b)是基于MPC方法的结果，(c) (d)是基于DWA方法的结果</h2><p>compare</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/person_following/compare.jpg"
+            data-srcset="/images/person_following/compare.jpg, /images/person_following/compare.jpg 1.5x, /images/person_following/compare.jpg 2x"
+            data-sizes="auto"
+            alt="/images/person_following/compare.jpg" />
+    </a><figcaption class="image-caption">本文方法与基于DWA方法的跟随效果对比，其中(a) (b)是基于MPC方法的结果，(c) (d)是基于DWA方法的结果</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="/images/person_following/box.jpg" title="compare" data-thumbnail="/images/person_following/box.jpg" data-sub-html="<h2>两种方法的指标对比</h2><p>compare</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/person_following/box.jpg"
+            data-srcset="/images/person_following/box.jpg, /images/person_following/box.jpg 1.5x, /images/person_following/box.jpg 2x"
+            data-sizes="auto"
+            alt="/images/person_following/box.jpg" />
+    </a><figcaption class="image-caption">两种方法的指标对比</figcaption>
+    </figure></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-04-10</span>
+            </div><div class="post-info-license">
+                <span><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://wenjie-2000.github.io/posts/person_following/" data-title="An Autonomous Robot for Collision-Free Person Following through Model Predictive Control" data-hashtags="planning,robot"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://wenjie-2000.github.io/posts/person_following/" data-hashtag="planning"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://wenjie-2000.github.io/posts/person_following/" data-title="An Autonomous Robot for Collision-Free Person Following through Model Predictive Control"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://wenjie-2000.github.io/posts/person_following/" data-title="An Autonomous Robot for Collision-Free Person Following through Model Predictive Control"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@6.20.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://wenjie-2000.github.io/posts/person_following/" data-title="An Autonomous Robot for Collision-Free Person Following through Model Predictive Control"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/planning/">Planning</a>,&nbsp;<a href="/tags/robot/">Robot</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" class="prev" rel="prev" title="碰撞检测算法"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>碰撞检测算法</a>
+            <a href="/posts/limsim&#43;&#43;/" class="next" rel="next" title="LimSim&#43;&#43;">LimSim&#43;&#43;<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.128.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">wenjie</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.1/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

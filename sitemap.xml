@@ -2,15 +2,19 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>http://wenjie-2000.github.io/tags/ad/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/categories/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/posts/limsim&#43;&#43;/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/tags/llm/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/categories/my-project/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/posts/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/tags/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/</loc><lastmod>2024-05-20T15:11:10&#43;08:00</lastmod></url><url>
-            <loc>http://wenjie-2000.github.io/categories/</loc><lastmod>2024-03-04T23:08:18&#43;08:00</lastmod></url><url>
-            <loc>http://wenjie-2000.github.io/tags/planning/</loc><lastmod>2024-03-04T23:08:18&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/posts/person_following/</loc><lastmod>2024-04-10T02:23:27&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/tags/planning/</loc><lastmod>2024-04-10T02:23:27&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/tags/robot/</loc><lastmod>2024-04-10T02:23:27&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/categories/planning/</loc><lastmod>2024-03-04T23:08:18&#43;08:00</lastmod></url><url>
-            <loc>http://wenjie-2000.github.io/tags/</loc><lastmod>2024-03-04T23:08:18&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/</loc><lastmod>2024-03-04T23:08:18&#43;08:00</lastmod></url><url>
-            <loc>http://wenjie-2000.github.io/tags/llm/</loc><lastmod>2024-01-06T11:31:56&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/categories/llm/</loc><lastmod>2024-01-06T11:31:56&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/posts/rlhf/</loc><lastmod>2024-01-06T11:31:56&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/tags/apollo/</loc><lastmod>2023-10-06T15:19:57&#43;08:00</lastmod></url><url>
@@ -22,4 +26,5 @@
             <loc>http://wenjie-2000.github.io/posts/dnn/</loc><lastmod>2023-09-26T09:10:26&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/tags/c&#43;&#43;/</loc><lastmod>2023-09-25T23:07:06&#43;08:00</lastmod></url><url>
             <loc>http://wenjie-2000.github.io/categories/c&#43;&#43;/</loc><lastmod>2023-09-25T23:07:06&#43;08:00</lastmod></url><url>
-            <loc>http://wenjie-2000.github.io/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc><lastmod>2023-09-25T23:07:06&#43;08:00</lastmod></url></urlset>
+            <loc>http://wenjie-2000.github.io/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc><lastmod>2023-09-25T23:07:06&#43;08:00</lastmod></url><url>
+            <loc>http://wenjie-2000.github.io/cv/</loc></url></urlset>

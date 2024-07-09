@@ -3,7 +3,15 @@
         <title>LLM - Tag - wenjie&#39;s blog</title>
         <link>http://wenjie-2000.github.io/tags/llm/</link>
         <description>LLM - Tag - wenjie&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 06 Jan 2024 11:31:56 &#43;0800</lastBuildDate><atom:link href="http://wenjie-2000.github.io/tags/llm/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 20 May 2024 15:11:10 &#43;0800</lastBuildDate><atom:link href="http://wenjie-2000.github.io/tags/llm/" rel="self" type="application/rss+xml" /><item>
+    <title>LimSim&#43;&#43;</title>
+    <link>http://wenjie-2000.github.io/posts/limsim&#43;&#43;/</link>
+    <pubDate>Mon, 20 May 2024 15:11:10 &#43;0800</pubDate>
+    <author>wenjie</author>
+    <guid>http://wenjie-2000.github.io/posts/limsim&#43;&#43;/</guid>
+    <description><![CDATA[LimSim++：多模态大模型在自动驾驶中的新舞台 论文名称：LimSim++: A Closed-Loop Platform for Deploying Multimodal LLMs in Autonomous Driving 项目主页：https://pjlab-ad]]></description>
+</item>
+<item>
     <title>RLHF</title>
     <link>http://wenjie-2000.github.io/posts/rlhf/</link>
     <pubDate>Sat, 06 Jan 2024 11:31:56 &#43;0800</pubDate>

@@ -14,6 +14,14 @@
     <description><![CDATA[LimSim++：多模态大模型在自动驾驶中的新舞台 论文名称：LimSim++: A Closed-Loop Platform for Deploying Multimodal LLMs in Autonomous Driving 项目主页：https://pjlab-ad]]></description>
 </item>
 <item>
+    <title>An Autonomous Robot for Collision-Free Person Following through Model Predictive Control</title>
+    <link>http://wenjie-2000.github.io/posts/person_following/</link>
+    <pubDate>Wed, 10 Apr 2024 02:23:27 &#43;0800</pubDate>
+    <author>wenjie</author>
+    <guid>http://wenjie-2000.github.io/posts/person_following/</guid>
+    <description><![CDATA[论文名称：An Autonomous Robot for Collision-Free Person Following through Model Predictive Control Introduction 目前，在具有动态障碍物的复杂环境中对行人进行稳定跟随较为困难，主要是由于环境具有高度不确定性，同时跟随对]]></description>
+</item>
+<item>
     <title>碰撞检测算法</title>
     <link>http://wenjie-2000.github.io/posts/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/</link>
     <pubDate>Mon, 04 Mar 2024 23:08:18 &#43;0800</pubDate>
